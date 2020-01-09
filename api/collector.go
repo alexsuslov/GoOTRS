@@ -19,3 +19,23 @@ func getterErrorInc(e error){
 		GetterError.Inc()
 	}
 }
+
+
+// SetterTotal SetterTotal
+var SetterTotal = prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "api_setter_total",
+		Help: "The total number of setter api requests",
+	})
+
+// SetterError SetterError
+var SetterError = prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "api_setter_errors",
+		Help: "The total number of setter api errors",
+	})
+
+
+func setterErrorInc(e error){
+	if e!= nil{
+		SetterError.Inc()
+	}
+}

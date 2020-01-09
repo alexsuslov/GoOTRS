@@ -2,9 +2,9 @@ package api
 
 import (
 	"github.com/alexsuslov/godotenv"
+	"go.uber.org/thriftrw/ptr"
 	"io/ioutil"
 	"log"
-	"go.uber.org/thriftrw/ptr"
 	"testing"
 )
 

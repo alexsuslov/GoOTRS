@@ -1,6 +1,6 @@
 # GoOTRS
 
-## Use
+## Get by id
 
 ``` 
 gotrs -get 744485  -AllArticles=true -Attachments=true DynamicFields=true | jq .
@@ -14,5 +14,24 @@ gotrs -get 744485  -AllArticles=true -Attachments=true DynamicFields=true | jq .
       "Type": "Default",
       "Responsible": "root@localhost",
 ...
+
+```
+
+## Update by id
+
+```
+cat test.json                                            
+{
+  "TicketID": 744485,
+  "DynamicField": [{
+    "Name": "VIP",
+    "Value": "+"
+  }]
+}
+```
+
+```
+
+cat test.json | gor -update=744485   
 
 ```
