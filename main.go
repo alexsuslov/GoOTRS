@@ -10,9 +10,11 @@ import (
 	"os"
 )
 
+var version string
 var help string
 var debugger bool
 
+var config string
 var get string
 var update string
 var DynamicFields bool
@@ -21,7 +23,7 @@ var Attachments bool
 
 func init() {
 	flag.BoolVar(&debugger, "debugger", false, "enable debugger")
-
+	flag.StringVar(&config, "config", ".env", "gotrs config env")
 	flag.StringVar(&update, "update", "", "update tiket in OTRS")
 
 	flag.StringVar(&get, "get", "", "get tiket from OTRS")
@@ -32,8 +34,7 @@ func init() {
 }
 
 func main(){
-
-	if err := godotenv.Load(); err!= nil{
+	if err := godotenv.Load(config); err!= nil{
 		panic(err)
 	}
 	if err := api.Init(); err!= nil {
@@ -66,6 +67,6 @@ func main(){
 		fmt.Print(string(data))
 		return
 	}
-
+	fmt.Printf("GoOTRS is a Golang wrapper for accessing OTRS using the REST API. Version %v \n", version)
 
 }
