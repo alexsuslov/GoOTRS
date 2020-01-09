@@ -56,7 +56,7 @@ cat test.json | gotrs -update=744485
 
 ```
 
-### Error
+### Error Message
 
 ```json
 {
