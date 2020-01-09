@@ -4,6 +4,7 @@ import (
 	"github.com/alexsuslov/godotenv"
 	"io/ioutil"
 	"log"
+	"go.uber.org/thriftrw/ptr"
 	"testing"
 )
 
@@ -16,7 +17,7 @@ func TestGetter(t *testing.T) {
 	}
 	type args struct {
 		id      string
-		options []bool
+		options []Options
 	}
 	tests := []struct {
 		name     string
@@ -27,7 +28,7 @@ func TestGetter(t *testing.T) {
 			"get tiket 744485",
 			args{
 				"744485",
-				[]bool {false, false, false},
+				[]Options{{ptr.Bool(true), ptr.Bool(true), ptr.Bool(true)}},
 			},
 			false,
 		},

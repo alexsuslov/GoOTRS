@@ -31,24 +31,26 @@ func Init() error {
 }
 
 
+type Options struct{
+	DynamicFields *bool
+	AllArticles *bool
+	Attachments *bool
+}
+
+
 // GetURL get url
-func GetURL(method string, id string, options ...bool) string {
+func GetURL(method string, id string, options ...Options) string {
 
 	opts := ""
-	for  i,_:=range(options){
-		switch(i){
-		case 0:
-			if options[i]{
-				opts = "&DynamicFields=1"
-			}
-		case 1:
-			if options[i]{
-				opts = opts+"&AllArticles=1"
-			}
-		case 2:
-			if options[i] {
-				opts = opts + "&Attachments=1"
-			}
+	for  _,option := range(options){
+		if option.DynamicFields!= nil {
+			opts = opts+"&DynamicFields=1"
+		}
+		if option.AllArticles!= nil {
+			opts = opts+"&AllArticles=1"
+		}
+		if option.Attachments!= nil {
+			opts = opts+"&Attachments=1"
 		}
 	}
 

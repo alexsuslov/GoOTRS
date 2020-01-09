@@ -38,7 +38,7 @@ func main(){
 	api.DEBUGGING=debugger
 
 	if get!= ""{
-		body, err := api.Getter(get, DynamicFields, AllArticles, Attachments)
+		body, err := api.Getter(get, api.Options{&DynamicFields, &AllArticles, &Attachments})
 		if err != nil{
 			panic(err)
 		}

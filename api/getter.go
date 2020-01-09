@@ -7,7 +7,7 @@ import (
 )
 
 //Getter Getter
-func Getter(id string, options ...bool) (Body io.ReadCloser, err error) {
+func Getter(id string, options ...Options) (Body io.ReadCloser, err error) {
 	GetterTotal.Inc()
 	defer getterErrorInc(err)
 
