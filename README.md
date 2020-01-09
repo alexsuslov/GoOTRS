@@ -32,6 +32,6 @@ cat test.json
 
 ```
 
-cat test.json | gor -update=744485   
+cat test.json | gotrs -update=744485   
 
 ```
