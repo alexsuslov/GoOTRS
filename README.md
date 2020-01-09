@@ -59,5 +59,10 @@ cat test.json | gotrs -update=744485
 ### Error
 
 ```json
-{"Error":{"ErrorCode":"TicketUpdate.InvalidParameter","ErrorMessage":"TicketUpdate: DynamicField->Name parameter is invalid!"}}
+{
+  "Error":{
+    "ErrorCode":"TicketUpdate.InvalidParameter",
+    "ErrorMessage":"TicketUpdate: DynamicField->Name parameter is invalid!"
+  }
+}
 ```
