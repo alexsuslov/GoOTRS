@@ -1,4 +1,24 @@
 # GoOTRS
+## Help
+```
+./gotrs -help
+Usage of ./gotrs:
+  -AllArticles
+        get AllArticles from tiket
+  -Attachments
+        get Attachments from tiket
+  -DynamicFields
+        get  DynamicFields from tiket
+  -config string
+        gotrs config env (default ".env")
+  -debugger
+        enable debugger
+  -get string
+        get tiket from OTRS
+  -update string
+        update tiket in OTRS
+
+```
 
 ## Get by id
 
