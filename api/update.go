@@ -13,5 +13,8 @@ func Update(id string, Req io.ReadCloser) (Body io.ReadCloser, err error) {
 
 	Url := fmt.Sprintf(GetURL("ticket/update", id))
 	u, err := url.Parse(Url)
+	if err!= nil{
+		return
+	}
 	return  Request("POST", u, Req)
 }
