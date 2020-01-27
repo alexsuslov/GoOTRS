@@ -23,7 +23,7 @@ Usage of ./gotrs:
 ## Get by id
 
 ``` 
-gotrs -get 744485  -AllArticles=true -Attachments=true DynamicFields=true | jq .
+gotrs -get 744485  -AllArticles=true -Attachments=true -DynamicFields=true | jq .
 
 {
   "Ticket": [
