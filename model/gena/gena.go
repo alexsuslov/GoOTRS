@@ -39,7 +39,7 @@ func main() {
 	s := "type TicketUpdate struct{\n"
 	for k, v := range config {
 		vs := strings.Split(v, ",")
-		fields[k]=vs[0]
+		fields[k]=strings.TrimSpace(vs[0])
 		note := fmt.Sprintf("`json:\"%s\"`", k)
 		if strings.Contains(v, "optional") {
 			note = fmt.Sprintf("`json:\"%s,omitempty\"`", k)
@@ -69,19 +69,34 @@ func main() {
 	//}
 
 
-	t, err = template.
+	setterT, err := template.
 		New("t").
 		Parse(setterTmpl)
 	if err != nil {
 		panic(err)
 	}
 
+	pointT, err := template.
+		New("t").
+		Parse(setterPTmpl)
+	if err != nil {
+		panic(err)
+	}
+
 	for k,v :=range fields {
-		t.Execute(f, map[string]string{
+		data:=map[string]string{
 			"Obj": "TicketUpdate",
 			"Name": k,
 			"Type": v,
-		})
+		}
+
+		if strings.HasPrefix(v, "*"){
+			data["Type"]=data["Type"][1:]
+			pointT.Execute(f , data)
+		}else{
+			setterT.Execute(f , data)
+		}
+
 	}
 
 
@@ -91,25 +106,25 @@ func main() {
 
 var TicketUpdate = `
     Title:          string
-    QueueID:        ID,             optional
-    Queue:          string,         optional
-    LockID:         ID,             optional
-    Lock:           string,         optional
-    TypeID:         ID,             optional
-    Type:           string,         optional
-    ServiceID:      ID,             optional
-    Service:        string,         optional
-    SLAID:          ID,             optional
-    SLA:            string,         optional
-    StateID:        ID,             optional
-    State:          string,         optional
-    PriorityID:     ID,             optional
-    Priority:       string,         optional
-    OwnerID:        ID,             optional
-    Owner:          string,         optional
-    ResponsibleID:  ID,             optional
-    Responsible:    string,         optional
-    CustomerUser:   string,         optional
+    QueueID:        "*ID,             optional"
+    Queue:          "*string,         optional"
+    LockID:         "*ID,             optional"
+    Lock:           "*string,         optional"
+    TypeID:         "*ID,             optional"
+    Type:           "*string,         optional"
+    ServiceID:      "*ID,             optional"
+    Service:        "*string,         optional"
+    SLAID:          "*ID,             optional"
+    SLA:            "*string,         optional"
+    StateID:        "*ID,             optional"
+    State:          "*string,         optional"
+    PriorityID:     "*ID,             optional"
+    Priority:       "*string,         optional"
+    OwnerID:        "*ID,             optional"
+    Owner:          "*string,         optional"
+    ResponsibleID:  "*ID,             optional"
+    Responsible:    "*string,         optional"
+    CustomerUser:   "*string,         optional"
     # PendingTime:    PendingTime,    optional
 `
 
@@ -156,7 +171,26 @@ func ({{.Obj}} *{{.Obj}}) Set{{.Name}}(to {{.Type}}) *{{.Obj}} {
 		}
 		from = {{.Obj}}.prev.{{.Name}}
 	}
-	{{.Obj}}.prev.{{.Name}} = to
+	{{.Obj}}.{{.Name}} = to
+
+	return {{.Obj}}.log("{{.Name}}", from, to)
+
+}
+
+
+`
+
+var setterPTmpl = `
+// Set{{.Name}} set {{.Name}}
+func ({{.Obj}} *{{.Obj}}) Set{{.Name}}(to {{.Type}}) *{{.Obj}} {
+	var from {{.Type}}
+	if {{.Obj}}.prev != nil {
+		if {{.Obj}}.prev.{{.Name}} == to {
+			return {{.Obj}}
+		}
+		from = {{.Obj}}.prev.{{.Name}}
+	}
+	{{.Obj}}.{{.Name}} = &to
 
 	return {{.Obj}}.log("{{.Name}}", from, to)
 

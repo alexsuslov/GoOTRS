@@ -75,27 +75,28 @@ type DynamicField struct {
 }
 
 type TicketUpdate struct {
-	QueueID       ID          `json:"QueueID,omitempty"`
-	Queue         string      `json:"Queue,omitempty"`
-	Lock          string      `json:"Lock,omitempty"`
-	StateID       ID          `json:"StateID,omitempty"`
-	Priority      string      `json:"Priority,omitempty"`
-	SLAID         ID          `json:"SLAID,omitempty"`
-	State         string      `json:"State,omitempty"`
-	Responsible   string      `json:"Responsible,omitempty"`
-	TypeID        ID          `json:"TypeID,omitempty"`
-	ServiceID     ID          `json:"ServiceID,omitempty"`
-	Owner         string      `json:"Owner,omitempty"`
-	ResponsibleID ID          `json:"ResponsibleID,omitempty"`
-	OwnerID       ID          `json:"OwnerID,omitempty"`
-	CustomerUser  string      `json:"CustomerUser,omitempty"`
 	Title         string      `json:"Title"`
-	LockID        ID          `json:"LockID,omitempty"`
-	Type          string      `json:"Type,omitempty"`
-	Service       string      `json:"Service,omitempty"`
-	SLA           string      `json:"SLA,omitempty"`
-	PriorityID    ID          `json:"PriorityID,omitempty"`
-	PendingTime   PendingTime `json:"PendingTime,omitempty"`
+
+	QueueID       *ID          `json:"QueueID,omitempty"`
+	Queue         *string      `json:"Queue,omitempty"`
+	Lock          *string      `json:"Lock,omitempty"`
+	StateID       *ID          `json:"StateID,omitempty"`
+	Priority      *string      `json:"Priority,omitempty"`
+	SLAID         *ID          `json:"SLAID,omitempty"`
+	State         *string      `json:"State,omitempty"`
+	Responsible   *string      `json:"Responsible,omitempty"`
+	TypeID        *ID          `json:"TypeID,omitempty"`
+	ServiceID     *ID          `json:"ServiceID,omitempty"`
+	Owner         *string      `json:"Owner,omitempty"`
+	ResponsibleID *ID          `json:"ResponsibleID,omitempty"`
+	OwnerID       *ID          `json:"OwnerID,omitempty"`
+	CustomerUser  *string      `json:"CustomerUser,omitempty"`
+	LockID        *ID          `json:"LockID,omitempty"`
+	Type          *string      `json:"Type,omitempty"`
+	Service       *string      `json:"Service,omitempty"`
+	SLA           *string      `json:"SLA,omitempty"`
+	PriorityID    *ID          `json:"PriorityID,omitempty"`
+	PendingTime   *PendingTime `json:"PendingTime,omitempty"`
 
 	logger bool
 	prev   *Ticket
@@ -116,7 +117,8 @@ func (TicketUpdate *TicketUpdate) log(FieldName string, from, to interface{}) *T
 }
 
 // SetPendingTime set PendingTime
-func (TicketUpdate *TicketUpdate) SetPendingTime(to PendingTime) *TicketUpdate {
+func (TicketUpdate *TicketUpdate) SetPendingTime(to *PendingTime) *TicketUpdate {
+	TicketUpdate.PendingTime = to
 	return TicketUpdate.log("PendingTime", "", to)
 
 }
