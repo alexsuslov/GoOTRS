@@ -13,9 +13,9 @@ type Ticket struct {
 	CreateBy                  ID             `json:"CreateBy"`
 	Changed                   string         `json:"Changed"`
 	Created                   string         `json:"Created"`
-	CustomerID                string         `json:"CustomerID"`
+	CustomerID                *string         `json:"CustomerID"`
 	CustomerUser              string         `json:"CustomerUser"`
-	CustomerUserID            string         `json:"CustomerUserID"`
+	CustomerUserID            *string         `json:"CustomerUserID"`
 	DynamicFields             []DynamicField `json:"DynamicField"`
 	EscalationDestinationDate string         `json:"EscalationDestinationDate"`
 	EscalationDestinationIn   string         `json:"EscalationDestinationIn"`
@@ -50,7 +50,7 @@ type Ticket struct {
 	SolutionTime int `json:"SolutionTime"`
 
 	SolutionTimeDestinationDate string `json:"SolutionTimeDestinationDate"`
-	SolutionTimeDestinationTime string `json:"SolutionTimeDestinationTime"`
+	SolutionTimeDestinationTime *Time `json:"SolutionTimeDestinationTime"`
 	SolutionTimeWorkingTime     int    `json:"SolutionTimeWorkingTime"`
 
 	State   string `json:"State"`

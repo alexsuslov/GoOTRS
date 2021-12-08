@@ -51,3 +51,29 @@ func (id *ID) UnmarshalJSON(b []byte) (err error) {
 type PendingTime struct{
 	Diff int `json:"Diff"`
 }
+
+
+type Time int
+
+func (t *Time) UnmarshalJSON(b []byte) (err error) {
+	var i int
+	if err = json.Unmarshal(b, &i); err == nil {
+		*t = Time(i)
+		return nil
+	}
+
+	var s string
+	if err = json.Unmarshal(b, &s); err == nil {
+		if s == "" {
+			return nil
+		}
+		i, err = strconv.Atoi(s)
+		if err != nil {
+			return err
+		}
+		*t = Time(i)
+		return
+	}
+
+	return fmt.Errorf("error otrs TypeTime(%v) parse err=%v", string(b), err)
+}
