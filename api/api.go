@@ -1,71 +1,45 @@
 package api
 
 import (
-	"fmt"
-	"github.com/alexsuslov/godotenv"
-	"log"
+	"net/url"
 	"strings"
 )
 
-var DEBUGGING bool
-var unsafeTLS bool
-var host string
-var apiWS string
-var user string
-var pass string
+var GENERIC_PATH = "otrs/nph-genericinterface.pl/Webservice"
 
-func Print(opts ...interface{}) {
-	if DEBUGGING {
-		log.Println(opts...)
+type OTRS struct {
+	Host               string
+	Webservice         string
+	InsecureSkipVerify bool
+}
+
+func New(Host, Webservice string, InsecureSkipVerify bool) *OTRS {
+	return &OTRS{
+		Host,
+		Webservice,
+		InsecureSkipVerify,
 	}
 }
 
-func Init() error {
-	unsafeTLS = "YES" == godotenv.GetPanic("OTRS_API_UNSAFE_TLS")
-	host = godotenv.GetPanic("OTRS_API_HOST")
-	apiWS = godotenv.GetPanic("OTRS_API_WS_NAME")
-	user = godotenv.GetPanic("OTRS_API_USER")
-	pass = godotenv.GetPanic("OTRS_API_PASSWORD")
-	//todo: check login
-	return nil
+type Opts struct {
+	DynamicFields bool
+	AllArticles   bool
+	Attachments   bool
 }
 
+func (OTRS OTRS) url(point *string) (string, error) {
 
-type Options struct{
-	DynamicFields *bool
-	AllArticles *bool
-	Attachments *bool
-}
+	points := []string{OTRS.Host, GENERIC_PATH, OTRS.Webservice}
 
-
-// GetURL get url
-func GetURL(method string, id string, options ...Options) string {
-
-	opts := ""
-	for  _,option := range(options){
-		if option.DynamicFields!= nil {
-			opts = opts+"&DynamicFields=1"
-		}
-		if option.AllArticles!= nil {
-			opts = opts+"&AllArticles=1"
-		}
-		if option.Attachments!= nil {
-			opts = opts+"&Attachments=1"
-		}
+	if point != nil {
+		points = append(points, *point)
 	}
 
-	GetUserPass := fmt.Sprintf("UserLogin=%s&Password=%s", user, pass)
+	path := strings.Join(points, "/")
 
-	return strings.Join([]string{
-		host,
-		"/otrs/nph-genericinterface.pl/Webservice/",
-		apiWS,
-		"/",
-		method,
-		"/",
-		id,
-		"?",
-		GetUserPass,
-		opts,
-	}, "")
+	URL, err := url.Parse(path)
+	if err != nil {
+		return "", err
+	}
+	return URL.String(), nil
 }

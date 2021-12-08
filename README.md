@@ -1,4 +1,9 @@
 # GoOTRS
+## Documentation
+
+https://otrscommunityedition.com/doc/api/otrs/6.0/Perl/index.html
+
+
 ## Help
 ```
 ./gotrs -help
