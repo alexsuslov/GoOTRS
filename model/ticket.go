@@ -49,7 +49,7 @@ type Ticket struct {
 
 	SolutionTime int `json:"SolutionTime"`
 
-	SolutionTimeDestinationDate string `json:"SolutionTimeDestinationDate"`
+	SolutionTimeDestinationDate *string `json:"SolutionTimeDestinationDate"`
 	SolutionTimeDestinationTime *Time `json:"SolutionTimeDestinationTime"`
 	SolutionTimeWorkingTime     int    `json:"SolutionTimeWorkingTime"`
 
