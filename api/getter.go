@@ -7,7 +7,6 @@ import (
 	"github.com/ddliu/go-httpclient"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/url"
 )
 
@@ -48,8 +47,6 @@ func (OTRS OTRS) Getter(id string, o url.Values) (Body io.ReadCloser, err error)
 	if err != nil {
 		return nil, err
 	}
-
-	log.Println(URL)
 
 	res, err := httpclient.
 		WithHeader("User-Agent", "ServiceChain").
